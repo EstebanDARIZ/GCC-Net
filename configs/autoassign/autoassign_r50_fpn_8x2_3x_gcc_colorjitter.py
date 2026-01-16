@@ -51,8 +51,10 @@ model = dict(
         score_thr=0.05,
         nms=dict(type='nms', iou_threshold=0.6),
         max_per_img=100))
+
 img_norm_cfg = dict(
     mean=[102.9801, 115.9465, 122.7717], std=[1.0, 1.0, 1.0], to_rgb=False)
+
 train_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(type='LoadAnnotations', with_bbox=True),
@@ -102,6 +104,7 @@ train_pipeline = [
     dict(type='DefaultFormatBundle'),
     dict(type='Collect', keys=['img', 'img_retinex', 'gt_bboxes', 'gt_labels'])
 ]
+
 test_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(
@@ -124,12 +127,14 @@ test_pipeline = [
             dict(type='Collect', keys=['img', 'img_retinex'])
         ])
 ]
+
 data_root = '/data2/dailh/DUO/'
 data = dict(
     samples_per_gpu=2,
     train=dict(pipeline=train_pipeline),
     val=dict(pipeline=test_pipeline),
     test=dict(pipeline=test_pipeline))
+
 # learning policy
 optimizer = dict(
     _delete_=True,
